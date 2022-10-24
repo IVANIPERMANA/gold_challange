@@ -42,12 +42,12 @@ def hate_speech_twitter():
         conn.commit()
         print(input_text)
         print(output_text)
-        return "Success"
+        return output_text
 
 
     elif request.method == "GET": 
         conn = sqlite3.connect('binar.db')
-        sql_text = "select * from hate_speech_twitter limit 10"
+        sql_text = "select * from hate_speech_twitter"
         table = conn.execute(sql_text)
         hate_speech_twitter = [
             dict(id=row[0], dirty_text=row[1], clean_text=cleansing_text(row[1]))
@@ -55,52 +55,19 @@ def hate_speech_twitter():
         ]
         return jsonify(hate_speech_twitter)
 
-
-@app.route("/hate_speech_twitter/<string:id>", methods=["GET","PUT","DELETE"])
-def id(id):
-    conn = sqlite3.connect('binar.db')
-    if request.method == "GET":   
-        sql_text = "select * from hate_speech_twitter where id = ?"
-        res = str(id)
-        table = conn.execute(sql_text, [res])
-        hate_speech_twitter = [
-            dict(id=row[0], dirty_text=row[1], clean_text=row[2])
-            for row in table.fetchall()
-        ]
-        print(hate_speech_twitter)
-        return jsonify(hate_speech_twitter)
-
-
-    elif request.method == "DELETE":
-        conn = sqlite3.connect('binar.db')
-        sql_text = "delete from tweet where id = ?"
-        res = id
-        conn.execute(sql_text, [res])
-        conn.commit()
-        return "delete"
-
-    elif request.method == "PUT":
-        conn = sqlite3.connect('binar.db')
-        input_text = str(request.form["text"])
-        output_text = cleansing_text(input_text)
-        sql_text = "update hate_speech_twitter set dirty_text = ?, clean_text = ? where id = ?"
-        res = (input_text, output_text, id)
-        conn.execute(sql_text, res)
-        conn.commit()
-        
-        return "update"
-
 # file
 @app.route("/hate_speech_twitter/csv", methods=["POST"])
 def hate_speech_twitter_csv():
     if request.method == 'POST':
         file = request.files['file']
+        
+        
         try:
             data = pd.read_csv(file, encoding='iso-8859-1')
         except:
             data = pd.read_csv(file, encoding='utf-8') 
         cleansing_file(data)
-        return "success"
+        return cleansing_file(data)
 
 
 # handling error

@@ -34,6 +34,7 @@ def remove_unneeded_char(text):
     text = re.sub('user',' ', text)     #remove kata user
     text = re.sub('rt',' ', text)       #remove kata rt
     text = re.sub(r'\s+', ' ',text)     #eliminate duplicate whitespaces
+    text = re.sub('xf0 x9f x98 x84 xf0 x9f x98 x84 xf0 x9f x98 x84',' ',text)
     return text
 
 # remove punctuation
@@ -44,15 +45,10 @@ def remove_punct(text):
 # cleansing data    
 def cleansing_data(text):
     text = lowercase(text) 
-    print('success lowercase', text)
     text = remove_emoji(text)
-    print('success remove_emoji', text)
     text = remove_bytes_character(text)
-    print('success remove bytes char',text)
     text = remove_unneeded_char(text)
-    print('success remove unneeded char', text)
     text = remove_punct(text)
-    print('success remove punct', text)
     return text
 
 # cleansing data for text
@@ -65,13 +61,14 @@ def cleansing_text(input_text):
         
 # cleansing data for file
 def cleansing_file(input_file):
-    first_column = input_file.iloc[:, 1]
-    print(first_column)
     conn = sqlite3.connect('binar.db')
+    first_column = input_file.iloc[:, 0]
+    print(first_column)
+
     for hate_speech_twitter in first_column:
-        clean_text = cleansing_data(hate_speech_twitter)
-        sql_text = "insert into hate_speech_twitter (dirty_text,clean_text) values (?, ?)"
+        clean_text = cleansing_text(hate_speech_twitter)
+        sql_tabel = "insert into hate_speech_twitter (dirty_text,clean_text) values (?, ?)"
         res = (hate_speech_twitter, clean_text)
-        conn.execute(sql_text, res)
+        conn.execute(sql_tabel, res)
         conn.commit()
         print(hate_speech_twitter)
