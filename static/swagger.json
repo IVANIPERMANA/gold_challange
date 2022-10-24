@@ -1,0 +1,245 @@
+{
+    "openapi": "3.0.3",
+    "info":{ 
+        "title":"Challenge Gold",
+        "version":"1.0.0",
+        "description": "Cleansing text",
+        "termsOfService": "https://www.github.com/ivanipermana",
+        "contact": {
+            "name": "Ivani Permana",
+            "email": "ivanipermana99.ip@gmail.com",
+            "url": "https://www.github.com/ivanipermana"
+        },
+        "license": {
+            "name": "APACHE 2.0",
+            "url": "htpps://www.apache.org/licenses/LICENSE-2.0"
+        }
+    },
+
+
+
+
+    "servers":[
+        {
+            "description": "API Server",
+            "url": "/"
+         }
+
+    ],
+
+
+    "externalDocs": {
+        "description": "Challange Gold",
+        "url": "https://github.com/ivanipermana/challange_gold"
+    },
+
+
+
+    "paths":{
+        "/":{
+            "get":{
+                "summary": "hate speech twitter",
+                "description": "hate speech twitter",
+                "responses": {
+                    "200":{
+                        "description": "success"
+                    },
+                    "404":{
+                        "description": "not found"
+                    },
+                    "500":{
+                        "description": "server error"
+                    }
+                }
+            }
+        },
+
+        "/hate_speech_twitter":{
+            "get":{
+                "summary": "Get list of dirty text",
+                "description": "list dirty text",
+                "responses": {
+                    "200":{
+                        "description": "success"
+                    },
+                    "404":{
+                        "description": "not found"
+                    },
+                    "500":{
+                        "description": "server error"
+                    }
+                }
+            },
+            "post":{
+                "summary": "Post a text",
+                "description": "Post to clean",
+                "requestBody":{
+                    "required": true,
+                    "content": {
+                        "multipart/form-data":{
+                            "schema":{
+                                "type": "object",
+                                "properties": {
+                                    "text":{
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200":{
+                        "description": "success"
+                    },
+                    "404":{
+                        "description": "not found"
+                    },
+                    "500":{
+                        "description": "server error"
+                    }
+                }
+            }
+        },
+
+
+
+
+
+        "/hate_speech_twitter/{id}":{
+            "get":{
+                "summary": "Get data from using id",
+                "description": "Get data using id",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "id",
+                        "schema":{
+                            "type":"integer"
+                        }
+
+                    }
+                ],
+                "responses": {
+                    "200":{
+                        "description": "success"
+                    },
+                    "404":{
+                        "description": "not found"
+                    },
+                    "500":{
+                        "description": "server error"
+                    }
+                }
+            },
+            "put":{
+                "summary": "Edit existing data",
+                "description": "Edit existing data",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "id",
+                        "schema":{
+                            "type":"integer"
+                        }
+
+                    }
+                ],
+                "requestBody":{
+                    "required": true,
+                    "content": {
+                        "multipart/form-data":{
+                            "schema":{
+                                "type": "object",
+                                
+                                "properties": {
+                                    "text":{
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200":{
+                        "description": "success"
+                    },
+                    "404":{
+                        "description": "not found"
+                    },
+                    "500":{
+                        "description": "server error"
+                    }
+                }
+            },
+            "delete":{
+                "summary": "Delete existing data",
+                "description": "Delete existing data",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "id",
+                        "schema":{
+                            "type":"integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200":{
+                        "description": "success"
+                    },
+                    "404":{
+                        "description": "not found"
+                    },
+                    "500":{
+                        "description": "server error"
+                    }
+                }
+            }
+
+        },
+
+        "/hate_speech_twitter/csv":{
+            "post":{
+                "summary": "Post a file",
+                "description": "Post to clean",
+                "requestBody":{
+                    "required": true,
+                    "content": {
+                        "multipart/form-data":{
+                            "schema":{
+                                "type": "object",
+                                "properties": {
+                                    "file":{
+                                        "type": "string",
+                                        "format": "base64"
+                                    }
+                                }
+   
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200":{
+                        "description": "success"
+                    },
+                    "404":{
+                        "description": "not found"
+                    },
+                    "500":{
+                        "description": "server error"
+                    }
+                }
+            }
+        }
+
+    }
+}
